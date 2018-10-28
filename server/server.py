@@ -3,7 +3,15 @@ import classes.eb_websocket as eb # our eb_websocket class
 from random import random
 
 # FUNCTIONS
-# -
+def find_user_from_id(toFindUserID, user_list):
+    for i, user in enumerate(user_list):
+        if user["userID"] == toFindUserID:
+            return (i, user)
+
+def find_room_from_id(toFindRoomID, room_list):
+    for i, room in enumerate(room_list):
+        if room["roomID"] == toFindRoomID:
+            return (i, room)
 
 # HANDLERS
 def setNickname(conn, data, server, private_data):
