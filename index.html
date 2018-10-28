@@ -155,6 +155,23 @@
     
                     $_("#chat-main").style.cssText = "padding:0;";
                     $_("#chat-main").innerHTML     = chat_screen_str;
+                    
+                    for(var i=0; i < data.chat_history.length; i++)
+                    {
+                        var chat_msg = data.chat_history[i];
+                        
+                        var message_str = ''+
+                            '<div id="message">'+
+                                '<span id="nickname">$userName</span>'+
+
+                                '<span id="message-content">$messageContent</span>'+
+                            '</div>';
+                        message_str = message_str.replace("$userName",       chat_msg.senderNickname);
+                        message_str = message_str.replace("$messageContent", chat_msg.message);
+                    
+                        var message_elem = str_to_element(message_str);
+                        $_("#message-screen").append(message_elem);
+                    }
 
                     $_("#send-message").addEventListener("keydown",function(e){
                         if(e.keyCode === 13) //enter
