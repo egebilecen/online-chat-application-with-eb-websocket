@@ -25,17 +25,19 @@ def getRoomList(conn, data, server, _):
 
 def newRoom(conn, data, server, private_data):
     if not private_data["isCreatedRoom"]:
-        server.room_list.append({
+        room = {
             "roomID"      : random(),
             "roomName"    : data["roomName"],
             "ownerID"     : private_data["userID"],
             "userList"    : [], # stored as nickname and user id pair
             "chatHistory" : []
-        })
+        }
+
+        server.room_list.append(room)
 
         private_data["isCreatedRoom"] = True
 
-        server.emit(conn, "newRoomResponse", {"code":1, "roomList":server.room_list})
+        server.emit(conn, "newRoomResponse", {"code":1, "roomID":room["roomID"]})
 
         server.emit_all("getRoomListResponse", server.room_list)
 

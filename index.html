@@ -54,9 +54,20 @@
             });
         }
 
-        function enter_chat_room(elem)
+        function enter_chat_room(elem, dynamic)
         {
-            var room_id = parseFloat(elem.getAttribute("room-id"));
+            if(typeof dynamic !== "boolean")
+                dynamic = false;
+
+            if(typeof elem !== "number" && dynamic)
+                return false;
+            
+            var room_id;
+
+            if(!dynamic)
+                room_id = parseFloat(elem.getAttribute("room-id"));
+            else
+                room_id = elem;
             
             ROOM_ID = room_id;
 
@@ -110,10 +121,11 @@
         });
 
         socket.on("newRoomResponse", function(data){
+
             switch(data.code)
             {
                 case 1: //başarı
-                    alert("Oda başarı ile oluşturuldu.");
+                    enter_chat_room(data.roomID, true);
                 break;
                 
                 case 2: //oda zaten olusturuldu
